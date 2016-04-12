@@ -15,7 +15,7 @@ describe Persistent::StorageDirectory do
 
   context "when released" do
     it 'has a version number' do
-      expect(Persistent::Cache::Storage::Directory::VERSION).not_to be nil
+      expect(Persistent::Storage::Directory::VERSION).not_to be nil
     end
   end
 

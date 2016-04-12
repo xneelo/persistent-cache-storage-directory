@@ -2,7 +2,7 @@ require 'persistent-cache/storage_api'
 require 'persistent-cache/version'
 
 module Persistent
-  class StorageDirectory < Persistent::Cache::StorageApi::API
+  class StorageDirectory < Persistent::Storage::API
     CACHE_FILE = "cache.gz" unless defined? CACHE_FILE; CACHE_FILE.freeze
 
     attr_accessor :storage_root

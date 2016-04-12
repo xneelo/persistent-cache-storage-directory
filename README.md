@@ -1,4 +1,4 @@
-# Persistent::Cache::StorageDirectory
+# Persistent::StorageDirectory
 
 This gem provides a directory storage back-end to Persistent::Cache. Please see https://rubygems.org/gems/persistent-cache.
 
