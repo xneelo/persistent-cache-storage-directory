@@ -14,17 +14,17 @@ module Persistent
     end
 
     def connect_to_database
-      FileUtils.makedirs([@storage_root]) if not File.directory?(@storage_root)
+      FileUtils.makedirs([@storage_root]) unless File.directory?(@storage_root)
     end
 
     def save_key_value_pair(key, value, timestamp = nil)
       prepare_to_store_key_value(key, value, timestamp)
-      store_key_value(key, value, get_time(timestamp)) if not value.nil?
+      store_key_value(key, value, get_time(timestamp)) unless value.nil?
     end
 
     def lookup_key(key)
       validate_key(key)
-      return [] if not File.exists? compile_value_path(key)
+      return [] unless File.exists?(compile_value_path(key))
       lookup_key_value_timestamp(key)
     end
 
@@ -34,7 +34,7 @@ module Persistent
     end
 
     def size
-      count = Dir::glob("#{@storage_root}/**/#{CACHE_FILE}").size
+      Dir.glob("#{@storage_root}/**/#{CACHE_FILE}").size
     end
 
     def keys
@@ -51,7 +51,7 @@ module Persistent
     def get_value_path(key)
       validate_key(key)
 
-      return nil if not key_cached?(key)
+      return nil unless key_cached?(key)
 
       compile_value_path(key)
     end
@@ -67,6 +67,10 @@ module Persistent
 
     private
 
+    def exclude_storage_root(subdirectories)
+      subdirectories[1..-1]
+    end
+
     def list_keys_sorted
       result = []
       append_keys(result).sort
@@ -80,9 +84,8 @@ module Persistent
     end
 
     def get_key_directories
-      subdirectories = Dir::glob("#{@storage_root}/**/")
-      #exclude the storage root directory itself
-      subdirectories[1..-1]
+      subdirectories = Dir.glob("#{@storage_root}/**/")
+      exclude_storage_root(subdirectories)
     end
 
     def extract_key_from_directory(dir)
@@ -100,7 +103,7 @@ module Persistent
 
     def validate_save_key_value_pair(key, value)
       validate_key(key)
-      raise ArgumentError.new("Only string values allowed") if not value.is_a?(String)
+      raise ArgumentError.new("Only string values allowed") unless value.is_a?(String)
     end
 
     def lookup_key_value_timestamp(key)
@@ -116,7 +119,7 @@ module Persistent
     end
 
     def validate_key(key)
-      raise ArgumentError.new("Only string keys allowed") if not key.is_a?(String)
+      raise ArgumentError.new("Only string keys allowed") unless key.is_a?(String)
       root_path = Pathname.new(File.absolute_path(@storage_root))
       key_path = Pathname.new(File.absolute_path(compile_key_path(key)))
       relative = key_path.relative_path_from(root_path).to_s
@@ -125,7 +128,7 @@ module Persistent
     end
 
     def empty_key_value(key)
-      FileUtils.makedirs([compile_key_path(key)]) if not File.exists?(compile_key_path(key))
+      FileUtils.makedirs([compile_key_path(key)]) unless File.exists?(compile_key_path(key))
       FileUtils.rm_f(compile_value_path(key))
     end
 
@@ -133,7 +136,7 @@ module Persistent
       timestamp.nil? ? Time.now.to_s : timestamp.to_s
     end
 
-    def prepare_to_store_key_value(key, value, timestamp)
+    def prepare_to_store_key_value(key, value, _timestamp)
       validate_save_key_value_pair(key, value)
       delete_entry(key)
       empty_key_value(key)
