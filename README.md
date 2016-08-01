@@ -1,5 +1,10 @@
 # Persistent::StorageDirectory
 
+[![Gem Version](https://badge.fury.io/rb/persistent-cache-storage-directory.png)](https://badge.fury.io/rb/persistent-cache-storage-directory)
+[![Build Status](https://travis-ci.org/evangraan/persistent-cache-storage-directory.svg?branch=master)](https://travis-ci.org/evangraan/persistent-cache-storage-directory)
+[![Coverage Status](https://coveralls.io/repos/github/evangraan/persistent-cache-storage-directory/badge.svg?branch=master)](https://coveralls.io/github/evangraan/persistent-cache-storage-directory?branch=master)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c7e576ffcf5c4f778a7923e0fa59e769)](https://www.codacy.com/app/ernst-van-graan/persistent-cache-storage-directory?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=evangraan/persistent-cache-storage-directory&amp;utm_campaign=Badge_Grade)
+
 This gem provides a directory storage back-end to Persistent::Cache. Please see https://rubygems.org/gems/persistent-cache.
 
 ## Installation
